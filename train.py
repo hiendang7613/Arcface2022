@@ -4,7 +4,7 @@ from Network.model import MyModel
 from Network.head.archead import ArcHead
 from Tensorflow.TFRecord.tfrecord import TFRecordData
 from training_supervisor import TrainingSupervisor
-from LossFunction.losses import arcface_loss_v4
+from LossFunction.losses import ArcfaceLoss
 from evalute import EvaluteObjects
 from config import train_config, mlflow_config
 from utlis.utlis import set_env_vars
@@ -47,7 +47,7 @@ def train():
     model.summary()
 
     # init loss function
-    loss_fn = arcface_loss_v4(margin=0.5, scale=64, n_classes=num_classes)
+    loss_fn = ArcfaceLoss(margin=0.5, scale=64, n_classes=num_classes)
 
     # dataloader
     dataloader_train = TFRecordData.load(record_name=tfrecord_file,
