@@ -2,11 +2,11 @@ from pathlib import Path
 
 projects_path = Path().parent.resolve()
 
-tfrecord_file = projects_path / 'Dataset' / 'raw_tfrecords' / 'lfw.tfrecords'
+tfrecord_file = Path('/content/Dataset/VGGFace2_mask.tfrecords')
 
-tfrecord_file_eval = projects_path / 'Dataset' / 'raw_tfrecords' / 'lfw.tfrecords'
+tfrecord_file_eval = Path('/content/Dataset/VGGFace2_mask.tfrecords')
 
-file_pair_eval = projects_path / 'Dataset' / 'raw_tfrecords' / 'lfw_pairs.txt'
+file_pair_eval = projects_path Path('/content/Dataset/VGGFace2_mask.tfrecords')
 
 num_classes = 5749
 
