@@ -103,7 +103,7 @@ def ArcfaceLoss(margin, scale, n_classes):
 
         mask = tf.cast(y_true, tf.int32, name='one_hot_mask')
 
-        logists = tf.where(mask == 1., cos_mt, cos_t)
+        logists = tf.where(mask == 1, cos_mt, cos_t)
 
         logists = tf.multiply(logists, scale, 'arcface_logist')
 

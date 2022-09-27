@@ -33,7 +33,7 @@ class IR_Block(tf.keras.layers.Layer):
 
 
 class hiendvModel(tf.keras.Model):
-    def __init__(self, Block=IR_Block, layers=(3, 4, 14, 3), include_top=True, embedding_size=512, dropout_rate=0):
+    def __init__(self, Block=IR_Block, layers=(3, 4, 14, 3), include_top=True, embedding_size=512, dropout_rate=0, input_shape=(160,160,3)):
         super(hiendvModel, self).__init__()
         self.conv = tf.keras.layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same')
         self.bn = tf.keras.layers.BatchNormalization()
@@ -51,6 +51,11 @@ class hiendvModel(tf.keras.Model):
         # self.globalpool = tf.keras.layers.GlobalAveragePooling2D()
         self.bn2 = tf.keras.layers.BatchNormalization()
         self.dropout = tf.keras.layers.Dropout(dropout_rate)
+        # print()
+        kernel_size = int(input_shape[0]/8)
+        self.reshape = tf.keras.layers.Reshape((kernel_size, kernel_size,512,1))
+        self.conv3D = tf.keras.layers.Conv3D(1, (kernel_size, kernel_size, 1), strides=1, padding='valid')
+        self.flatten = tf.keras.layers.Flatten()
         self.dense = None
         if include_top:
             self.dense = tf.keras.layers.Dense(embedding_size)
@@ -68,6 +73,9 @@ class hiendvModel(tf.keras.Model):
         x = self.bn2(x, training=training)
         x = self.dropout(x, training=training)
         # x = self.globalpool(x)
+        x = self.reshape(x)
+        x = self.conv3D(x)
+        x = self.flatten(x)
         if self.dense is not None:
             x = self.dense(x)
         x = self.bn3(x, training=training)

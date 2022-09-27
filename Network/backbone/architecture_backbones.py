@@ -31,7 +31,7 @@ def backbone_model(type_model,
     #     output = tf.keras.layers.Flatten()(backbone.output)
     #     backbone = tf.keras.Model(backbone.input, output)
     elif type_model == 'hiendv_model':
-        input_tensor = tf.keras.layers.Input(shape=(112, 112, 3))
+        input_tensor = tf.keras.layers.Input(shape=(160, 160, 3))
         output = hiendvModel_50(include_top=False)(input_tensor)
         backbone = tf.keras.Model(input_tensor, output)
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # print(model.summary())
 
     model = Sequential([
-        tf.keras.Input(shape=(112, 112, 3)),
+        tf.keras.Input(shape=(160, 160, 3)),
         output_based_network,
         # tf.keras.layers.Dense(512),
     ])

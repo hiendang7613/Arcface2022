@@ -33,7 +33,7 @@ def train():
     p = int(512.0/batch_size)
     lr_steps = [p*val for val in [40000, 60000, 80000]]
     print(lr_steps)
-    lr = tf.train.piecewise_constant(global_step, boundaries=lr_steps, values=[0.001, 0.0005, 0.0003, 0.0001], name='lr_schedule')  # type: ignore
+    lr = tf.compat.v1.train.piecewise_constant(global_step, boundaries=lr_steps, values=[0.001, 0.0005, 0.0003, 0.0001], name='lr_schedule')  # type: ignore
 
     # chosing model
     type_backbone = 'hiendv_model'
